@@ -4,8 +4,9 @@ import {
     AccordionItemButton,
     AccordionItemHeading,
     AccordionItemPanel,
-} from "react-accessible-accordion";
-import "./forecast.css";
+} from 'react-accessible-accordion';
+
+import { Card, Typography, Box } from '@mui/material';
 
 const WEEK_DAYS = [
     "Monday",
@@ -17,69 +18,73 @@ const WEEK_DAYS = [
     "Sunday",
 ];
 
-const Forecast = ({ data }) => {
+const Forecast = ({ data, theme }) => {
     const dayInWeek = new Date().getDay();
     const forecastDays = WEEK_DAYS.slice(dayInWeek, WEEK_DAYS.length).concat(
         WEEK_DAYS.slice(0, dayInWeek)
     );
 
     return (
-        <>
-            <label className="title"> Daily</label>
+        <Box>
+            <Typography variant="h6"> Daily</Typography>
             <Accordion allowZeroExpanded>
                 {data.list.splice(0, 7).map((item, idx) => (
                     <AccordionItem key={idx}>
                         <AccordionItemHeading>
                             <AccordionItemButton>
-                                <div className="daily-items">
-                                    <img
-                                        alt="weather"
-                                        className="icons-small"
-                                        src={`icons/${item.weather[0].icon}.png`}
-                                    />
-                                    <label className="day">{forecastDays[idx]}</label>
-                                    <label className="description">
-                                        {item.weather[0].description}
-                                    </label>
-                                    <label className="min-max">
-                                        {Math.round(item.main.temp_min)}°C /{" "}
-                                        {Math.round(item.main.temp_max)}°C{" "}
-                                    </label>
-                                </div>
+                                <Card>
+                                    <Box display="flex" alignItems="center" padding={2}>
+                                        <img
+                                            alt="weather"
+                                            src={`icons/${item.weather[0].icon}.png`}
+                                            style={{ filter: theme === 'light' ? 'none' : 'invert(1)' }}
+                                        />
+                                        <Typography variant="body1" sx={{ marginLeft: 2 }}>
+                                            {forecastDays[idx]}
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ marginLeft: 2 }}>
+                                            {item.weather[0].description}
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ marginLeft: 2 }}>
+                                            {Math.round(item.main.temp_min)}°C /{" "}
+                                            {Math.round(item.main.temp_max)}°C{" "}
+                                        </Typography>
+                                    </Box>
+                                </Card>
                             </AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-                            <div className="daily-details-grid">
-                                <div className="daily-details-grid-items">
-                                    <label>Pressure:</label>
-                                    <label>{item.main.pressure} hPa</label>
-                                </div>
-                                <div className="daily-details-grid-items">
-                                    <label>Humidity:</label>
-                                    <label>{item.main.humidity}%</label>
-                                </div>
-                                <div className="daily-details-grid-items">
-                                    <label>Clouds:</label>
-                                    <label>{item.clouds.all}%</label>
-                                </div>
-                                <div className="daily-details-grid-items">
-                                    <label>Wind Speed:</label>
-                                    <label>{item.wind.speed} m/s</label>
-                                </div>
-                                <div className="daily-details-grid-items">
-                                    <label>Sea Level:</label>
-                                    <label>{item.main.sea_level}m</label>
-                                </div>
-                                <div className="daily-details-grid-items">
-                                    <label>Feels Like:</label>
-                                    <label>{Math.round(item.main.feels_like)}°C</label>
-                                </div>
-                            </div>
+                            <Box className="daily-details-grid">
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Pressure:</Typography>
+                                    <Typography>{item.main.pressure} hPa</Typography>
+                                </Box>
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Humidity:</Typography>
+                                    <Typography>{item.main.humidity}%</Typography>
+                                </Box>
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Clouds:</Typography>
+                                    <Typography>{item.clouds.all}%</Typography>
+                                </Box>
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Wind Speed:</Typography>
+                                    <Typography>{item.wind.speed} m/s</Typography>
+                                </Box>
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Sea Level:</Typography>
+                                    <Typography>{item.main.sea_level}m</Typography>
+                                </Box>
+                                <Box className="daily-details-grid-items">
+                                    <Typography>Feels Like:</Typography>
+                                    <Typography>{Math.round(item.main.feels_like)}°C</Typography>
+                                </Box>
+                            </Box>
                         </AccordionItemPanel>
                     </AccordionItem>
                 ))}
             </Accordion>
-        </>
+        </Box>
     );
 };
 
