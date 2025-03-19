@@ -5,6 +5,7 @@ import {
     AccordionItemHeading,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
+import './forecast.css'
 
 import { Card, Typography, Box } from '@mui/material';
 

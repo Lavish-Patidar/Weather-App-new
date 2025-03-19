@@ -3,9 +3,12 @@ import { Card, Typography, Box, Grid, styled } from "@mui/material";
 import WeatherLeft from "./WeatherLeft";
 
 const StyledCard = styled(Card)(({ theme }) => ({
-    width: '60%',
+    width: '40%',
     padding: 20,
     margin: '15px auto',
+    [theme.breakpoints.down('md')]: {
+        width: '50%',
+    },
     [theme.breakpoints.down('sm')]: {
         width: '95%'
     }
@@ -17,10 +20,9 @@ const LeftSide = styled(Box)(({ }) => ({
 }));
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
-    gap: '10rem',
-    [theme.breakpoints.down("sm")]: {
-        gap: '2rem',
-    }
+    display: 'flex',
+    justifyContent: 'space-evenly',
+
 }))
 
 const Weather = ({ data, theme, forecast }) => {
